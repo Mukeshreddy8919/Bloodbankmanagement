@@ -9,7 +9,7 @@ app.secret_key = os.urandom(24)
 
 # MySQL Configuration
 db_config = {
-    'host': os.environ.get('shinkansen.proxy.rlwy.net'),
+    'host': os.environ.get('mysql.railway.internal'),
     'user': os.environ.get('root'),
     'password': os.environ.get('tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC'),
     'database': os.environ.get('railway')
