@@ -2,18 +2,28 @@ from flask import Flask, jsonify, request, render_template, redirect, url_for, s
 import mysql.connector
 import bcrypt
 import os
-import re  # Regular expressions to validate email.
+import re 
+from urllib.parse import urlparse
+
+# Regular expressions to validate email.
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # MySQL Configuration
-db_config = {
-    'host': os.environ.get('mysql.railway.internal'),
-    'user': os.environ.get('root'),
-    'password': os.environ.get('tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC'),
-    'database': os.environ.get('railway')
-}
+
+DATABASE_URL = os.environ.get('mysql://root:tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC@mysql.railway.internal:3306/railway')
+if DATABASE_URL:
+    url = urlparse(DATABASE_URL)
+    db_config = {
+        'host': url.mysql.railway.internal,
+        'user': url.root,
+        'password': url.tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC,
+        'database': url.path[1:],
+        'port': url.port or 3306,
+    }
+else:
+     raise EnvironmentError("DATABASE_URL environment variable not set.")
 
 
 def get_db_connection():
