@@ -25,6 +25,18 @@ def generate_hash():
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     return jsonify({'hash': hashed_password.decode('utf-8')})
 
+
+
+@app.route("/test_db")
+def test_db():
+    import mysql.connector
+    try:
+        conn = mysql.connector.connect(**db_config)
+        return "Database connection successful!"
+    except Exception as e:
+        return f"Error: {e}"
+
+
 @app.route('/', methods=['GET', 'POST'])
 def default_login():
     return redirect(url_for('user_login'))
