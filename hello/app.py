@@ -10,8 +10,9 @@ from urllib.parse import urlparse
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+
 # MySQL Configuration
-DATABASE_URL = os.environ.get('mysql://root:tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC@shinkansen.proxy.rlwy.net:58578/railway')
+DATABASE_URL = os.environ.get('mysql://root:tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC@mysql.railway.internal:3306/railway')
 
 
 if DATABASE_URL:
