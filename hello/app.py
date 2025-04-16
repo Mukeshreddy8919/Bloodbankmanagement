@@ -9,11 +9,12 @@ app.secret_key = os.urandom(24)
 
 # MySQL Configuration
 db_config = {
-    'host': '127.0.0.1',
-    'user': 'root',
-    'password': 'mukesh',
-    'database': 'bloodf_bank'
+    'host': os.environ.get('DB_HOST'),
+    'user': os.environ.get('DB_USER'),
+    'password': os.environ.get('DB_PASSWORD'),
+    'database': os.environ.get('DB_NAME')
 }
+
 
 def get_db_connection():
     return mysql.connector.connect(**db_config)
