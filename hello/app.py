@@ -21,7 +21,7 @@ if DATABASE_URL:
         'user': url.root,
         'password': url.tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC,
         'database': url.path[1:],
-        'port': url.port or 3306,
+        'port':  3306,
     }
 else:
      raise EnvironmentError("DATABASE_URL environment variable not set.")
