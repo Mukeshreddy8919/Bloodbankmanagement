@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List of Donors</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('user_home') }}">Home</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+    <div class="content">
+        <h2>List of Donors</h2>
+        {% if donors %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Donor ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Mobile No</th>
+                    <th>Blood Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for donor in donors %}
+                <tr>
+                    <td>{{ donor.donor_id }}</td>
+                    <td>{{ donor.name }}</td>
+                    <td>{{ donor.address }}</td>
+                    <td>{{ donor.mobile_no }}</td>
+                    <td>{{ donor.blood_type }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>

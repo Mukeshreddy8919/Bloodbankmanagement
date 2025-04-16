@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+        <a href="#donor-list">Donor List</a>
+        <a href="#user-list">User List</a>
+        <a href="#blood-stocks">Blood Stocks</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+    <div class="dashboard-container">
+        <div class="sections">
+            <div id="donor-list" class="section">
+                <h2>Donor Management</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Donor ID</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Mobile No</th>
+                            <th>Blood Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for donor in donors %}
+                        <tr>
+                            <td>{{ donor.donor_id }}</td>
+                            <td>{{ donor.name }}</td>
+                            <td>{{ donor.address }}</td>
+                            <td>{{ donor.mobile_no }}</td>
+                            <td>{{ donor.blood_type }}</td>
+                            <td><a href="{{ url_for('delete_donor', donor_id=donor.donor_id) }}">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="user-list" class="section">
+                <h2>User Management</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Full Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.user_id }}</td>
+                            <td>{{ user.full_name }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.role }}</td>
+                            <td><a href="{{ url_for('delete_user', user_id=user.user_id) }}">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="blood-stocks" class="section">
+                <h2>Blood Stock Management</h2>
+                <div class="update-stock-form">
+                    <select name="blood_type" id="blood_type">
+                        <option value="">Select Blood Group</option>
+                        {% for stock in stocks %}
+                            <option value="{{ stock.blood_type }}">{{ stock.blood_type }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="operation-buttons">
+                        <button class="operation-button active" data-operation="add">Increase</button>
+                        <button class="operation-button" data-operation="subtract">Decrease</button>
+                    </div>
+                    <input type="number" name="units" id="units" placeholder="Units">
+                    <button class="update-button" id="updateStockButton">Update Stock</button>
+                </div>
+
+                <div class="stock-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Blood Group</th>
+                                <th>Units Available</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stock in stocks %}
+                            <tr>
+                                <td>{{ stock.blood_type }}</td>
+                                <td>{{ stock.units }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // JavaScript to handle operation button selection
+        const operationButtons = document.querySelectorAll('.operation-button');
+        operationButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                operationButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+
+        document.getElementById('updateStockButton').addEventListener('click', function() {
+            const bloodType = document.getElementById('blood_type').value;
+            const operation = document.querySelector('.operation-button.active').getAttribute('data-operation');
+            const units = document.getElementById('units').value;
+
+            fetch(`/update_stock/${bloodType}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `operation=${operation}&units=${units}`,
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Failed to update stock.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred.');
+            });
+        });
+    </script>
+</body>
+</html>

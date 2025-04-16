@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}User Home{% endblock %}
+
+{% block navbar %}
+    <nav>
+        <a href="{{ url_for('user_home') }}">Home</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome, User!</h1>
+    <div class="user-operations">
+        <a href="{{ url_for('add_donor_page') }}" class="operation-card">
+            <h2>Add Donor</h2>
+            <p>Add a new donor to the system.</p>
+        </a>
+        <a href="{{ url_for('search_donors_page') }}" class="operation-card">
+            <h2>Search Donors</h2>
+            <p>Search for donors based on blood type and address.</p>
+        </a>
+        <a href="{{ url_for('blood_stocks_page') }}" class="operation-card">
+            <h2>Blood Stocks</h2>
+            <p>View the current blood stock levels.</p>
+        </a>
+        <a href="{{ url_for('list_donors_page') }}" class="operation-card">
+            <h2>List of Donors</h2>
+            <p>View a list of all donors.</p>
+        </a>
+    </div>
+{% endblock %}

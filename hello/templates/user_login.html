@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Bank Management System</title>
+    <!-- Tailwind CSS via jsdelivr -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .auth-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            margin: 1rem;
+        }
+        
+        .system-name {
+            color: #e53e3e;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .system-icon {
+            color: #e53e3e;
+            margin-right: 0.5rem;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 14px;
+            color: #718096;
+            z-index: 10;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            border-color: #e53e3e;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.2);
+        }
+        
+        .form-input::placeholder {
+            color: #a0aec0;
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: #c53030;
+        }
+        
+        .error-message {
+            color: #e53e3e;
+            background-color: #fff5f5;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border-left: 3px solid #e53e3e;
+        }
+        
+        .link {
+            color: #4299e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .link:hover {
+            color: #2b6cb0;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- User Login Container -->
+    <div class="auth-container">
+        <div class="system-name text-xl">
+            <i class="fas fa-tint system-icon"></i>Blood Bank Management System
+        </div>
+        <h1 class="text-2xl font-bold text-center mb-6">User Login</h1>
+        
+        <!-- Error message placeholder -->
+        <div class="error-message hidden">
+            Error message will appear here
+        </div>
+        
+        <form method="POST" action="/user_login">
+            <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" name="username" placeholder="Username" required class="form-input">
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" name="password" placeholder="Password" required class="form-input">
+            </div>
+            
+            <button type="submit" class="login-btn">User Login</button>
+        </form>
+        
+        <p class="mt-4 text-center">Don't have an account? <a href="/register" class="link">Sign up</a></p>
+        <p class="mt-2 text-center"><a href="/admin_login" class="link">Admin Login</a></p>
+    </div>
+    
+    <!-- Admin Login Container (hidden by default) -->
+    <div class="auth-container hidden">
+        <div class="system-name text-xl">
+            <i class="fas fa-tint system-icon"></i>Blood Bank Management System
+        </div>
+        <h1 class="text-2xl font-bold text-center mb-6">Admin Login</h1>
+        
+        <!-- Error message placeholder -->
+        <div class="error-message hidden">
+            Error message will appear here
+        </div>
+        
+        <form method="POST" action="/admin_login">
+            <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" name="username" placeholder="Username" required class="form-input">
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" name="password" placeholder="Password" required class="form-input">
+            </div>
+            
+            <button type="submit" class="login-btn">Admin Login</button>
+        </form>
+        
+        <p class="mt-4 text-center"><a href="#" class="link">Back to User Login</a></p>
+    </div>
+</body>
+</html>
