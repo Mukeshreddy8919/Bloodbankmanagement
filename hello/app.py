@@ -18,6 +18,8 @@ DATABASE_URL = os.environ.get('mysql://root:tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC@shi
 if DATABASE_URL:
     url = urlparse(DATABASE_URL)
     db_config = {
+
+        
         'host': url.shinkansen.proxy.rlwy.net,
         'user': url.root,
         'password': url.tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC,
