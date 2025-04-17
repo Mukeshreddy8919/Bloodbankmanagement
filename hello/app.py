@@ -24,7 +24,7 @@ if DATABASE_URL:
         'user': url.root,
         'password': url.tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC,
         'database': url.path[1:],
-        'port':  58578,
+        'port':  3306,
     }
 else:
     print("Warning: MYSQL_URL environment variable not set. Database connection might fail.")
