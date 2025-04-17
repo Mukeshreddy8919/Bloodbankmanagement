@@ -12,19 +12,22 @@ app.secret_key = os.urandom(24)
 db_config = {} 
 
 # MySQL Configuration
-DATABASE_URL = os.environ.get('mysql://root:tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC@shinkansen.proxy.rlwy.net:58578/railway')
+DATABASE_URL = os.environ.get('mysql://root:tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC@mysql.railway.internal:3306/railway')
 
 
 if DATABASE_URL:
     url = urlparse(DATABASE_URL)
     db_config = {
 
-        
         'host': url.mysql.railway.internal,
         'user': url.root,
         'password': url.tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC,
         'database': url.path[1:],
-        'port':  3306,
+        'port': url.port or 3306,
+
+        
+        
+
     }
 else:
     print("Warning: MYSQL_URL environment variable not set. Database connection might fail.")
