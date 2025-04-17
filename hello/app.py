@@ -25,7 +25,7 @@ if DATABASE_URL:
         'port':  3306,
     }
 else:
-     raise EnvironmentError("DATABASE_URL environment variable not set.")
+    print("Warning: MYSQL_URL environment variable not set. Database connection might fail.")
 
 
 def get_db_connection():
