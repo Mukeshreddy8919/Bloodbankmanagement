@@ -20,7 +20,7 @@ if DATABASE_URL:
     db_config = {
 
         
-        'host': url.shinkansen.proxy.rlwy.net,
+        'host': url.mysql.railway.internal,
         'user': url.root,
         'password': url.tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC,
         'database': url.path[1:],
