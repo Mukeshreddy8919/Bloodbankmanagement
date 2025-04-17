@@ -31,6 +31,9 @@ else:
 def get_db_connection():
     return mysql.connector.connect(**db_config)
 
+
+
+
 @app.route('/generate_hash')
 def generate_hash():
     password = "Mukhesh@2005"
@@ -47,6 +50,72 @@ def test_db():
         return "Database connection successful!"
     except Exception as e:
         return f"Error: {e}"
+
+
+
+
+
+
+@app.route('/create_tables')
+def create_tables():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    sql_commands = [
+        """
+        CREATE TABLE IF NOT EXISTS users (
+            user_id INT AUTO_INCREMENT PRIMARY KEY,
+            full_name VARCHAR(255) NOT NULL,
+            username VARCHAR(80) UNIQUE NOT NULL,
+            email VARCHAR(120) UNIQUE NOT NULL,
+            password VARCHAR(255) NOT NULL,
+            role VARCHAR(20) NOT NULL DEFAULT 'user'
+        )
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS donors (
+            donor_id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            address VARCHAR(255),
+            mobile_no VARCHAR(20),
+            blood_type VARCHAR(5) NOT NULL
+        )
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS blood_stocks (
+            blood_type VARCHAR(5) PRIMARY KEY,
+            units INT NOT NULL DEFAULT 0
+        )
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS messages (
+            message_id INT AUTO_INCREMENT PRIMARY KEY,
+            sender_id INT,
+            recipient_id INT,
+            message_text TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (sender_id) REFERENCES users(user_id),
+            FOREIGN KEY (recipient_id) REFERENCES users(user_id)
+        )
+        """
+    ]
+    try:
+        for sql in sql_commands:
+            cursor.execute(sql)
+        conn.commit()
+        return "Tables created successfully!"
+    except mysql.connector.Error as err:
+        return f"Error creating tables: {err}"
+    finally:
+        if conn and conn.is_connected():
+            cursor.close()
+            conn.close()
+
+
+
+
+
+
+
 
 
 @app.route('/', methods=['GET', 'POST'])
