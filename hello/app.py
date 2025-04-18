@@ -96,22 +96,34 @@ def user_login():
 
 @app.route('/admin_login', methods=['GET', 'POST'])
 def admin_login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        conn = get_db_connection()
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute('SELECT * FROM users WHERE username = %s AND role = %s', (username, 'admin'))
-        user = cursor.fetchone()
-        cursor.close()
-        conn.close()
+    conn = None
+    cursor = None
+    try:
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+            conn = get_db_connection()
+            if conn:
+                cursor = conn.cursor(dictionary=True)
+                cursor.execute('SELECT * FROM users WHERE username = %s AND role = %s', (username, 'admin'))
+                user = cursor.fetchone()
 
-        if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
-            session['user_id'] = user['user_id']
-            session['role'] = user['role']
-            return redirect(url_for('admin_dashboard'))
-        else:
-            return render_template('admin_login.html', error='Invalid username or password')
+                if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
+                    session['user_id'] = user['user_id']
+                    session['role'] = user['role']
+                    return redirect(url_for('admin_dashboard'))
+                else:
+                    return render_template('admin_login.html', error='Invalid username or password')
+            else:
+                return "Error: Could not establish database connection."
+    except mysql.connector.Error as err:
+        print(f"Database error: {err}")
+        return f"Database error: {err}"
+    finally:
+        if cursor:
+            cursor.close()
+        if conn and conn.is_connected():
+            conn.close()
     return render_template('admin_login.html')
 
 @app.route('/register', methods=['GET', 'POST'])
