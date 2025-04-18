@@ -43,7 +43,7 @@ if db_config:
 
 
 
-def get_db_connection_from_pool():
+def get_db_connection():
     if db_pool:
         return db_pool.get_connection()
     return None
