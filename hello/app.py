@@ -17,7 +17,6 @@ DATABASE_URL = os.environ.get('mysql://root:tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC@mys
 
 if DATABASE_URL:
     url = urlparse(DATABASE_URL)
-    db_config = {
 
     db_config = {
         'host': url.hostname,
