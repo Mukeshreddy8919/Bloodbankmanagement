@@ -6,32 +6,30 @@ import os
 import re 
 from urllib.parse import urlparse
 
-# Regular expressions to validate email.
+
+
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-db_config = {} 
+db_config = {}
 
 # MySQL Configuration
 DATABASE_URL = os.environ.get('mysql://root:tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC@shinkansen.proxy.rlwy.net:58578/railway')
-
+print(f"DATABASE_URL: {DATABASE_URL}")  # Add this line
 
 if DATABASE_URL:
     url = urlparse(DATABASE_URL)
-
     db_config = {
         'password': url.password,
         'host': url.hostname,
         'user': url.username,
         'port': url.port or 3306,
-       
         'database': url.path[1:],
-        
-
-        
-        
-
     }
+    print(f"db_config: {db_config}")  # Add this line
+else:
+    print("Warning: MYSQL_PUBLIC_URL environment variable not set. Database connection might fail.")
 
 db_pool = None
 if db_config:
@@ -40,13 +38,28 @@ if db_config:
     except mysql.connector.Error as err:
         print(f"Error creating connection pool: {err}")
 
-
-
-
 def get_db_connection():
     if db_pool:
         return db_pool.get_connection()
     return None
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Regular expressions to validate email.
 
 
 
