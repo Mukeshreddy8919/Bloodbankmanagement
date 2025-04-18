@@ -15,7 +15,7 @@ app.secret_key = os.urandom(24)
 db_config = {}
 
 # MySQL Configuration
-DATABASE_URL = os.environ.get('MYSQL_URL')
+DATABASE_URL = os.environ.get('PUBLIC_MYSQL_URL')
 print(f"DATABASE_URL: {DATABASE_URL}")  # Add this line
 
 if DATABASE_URL:
