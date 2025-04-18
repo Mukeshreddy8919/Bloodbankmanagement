@@ -19,11 +19,13 @@ if DATABASE_URL:
     url = urlparse(DATABASE_URL)
 
     db_config = {
+        'password': url.password,
         'host': url.hostname,
         'user': url.username,
-        'password': url.password,
-        'database': url.path[1:],
         'port': url.port or 3306,
+       
+        'database': url.path[1:],
+        
 
         
         
