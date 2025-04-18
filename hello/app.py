@@ -19,9 +19,10 @@ if DATABASE_URL:
     url = urlparse(DATABASE_URL)
     db_config = {
 
-        'host': url.mysql.railway.internal,
-        'user': url.root,
-        'password': url.tVibzqhaaTvTyXoxnVpIHYUiTGHbrKVC,
+    db_config = {
+        'host': url.hostname,
+        'user': url.username,
+        'password': url.password,
         'database': url.path[1:],
         'port': url.port or 3306,
 
