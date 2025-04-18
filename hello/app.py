@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, render_template, redirect, url_for, session
 import mysql.connector
+from mysql.connector import pooling
 import bcrypt
 import os
 import re 
@@ -31,12 +32,21 @@ if DATABASE_URL:
         
 
     }
-else:
-    print("Warning: MYSQL_URL environment variable not set. Database connection might fail.")
+
+db_pool = None
+if db_config:
+    try:
+        db_pool = pooling.MySQLConnectionPool(pool_name="my_pool", pool_size=5, **db_config)
+    except mysql.connector.Error as err:
+        print(f"Error creating connection pool: {err}")
 
 
-def get_db_connection():
-    return mysql.connector.connect(**db_config)
+
+
+def get_db_connection_from_pool():
+    if db_pool:
+        return db_pool.get_connection()
+    return None
 
 
 
